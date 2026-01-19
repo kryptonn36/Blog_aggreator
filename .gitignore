@@ -1,0 +1,11 @@
+# Environment files
+.env
+
+# Binaries
+bin/
+*.exe
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
