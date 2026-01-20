@@ -21,7 +21,7 @@ Make sure PostgreSQL is running and you have a database created for the app.
 
 Install the gator CLI using go install:
 
-go install github.com/<your-username>/Blog_aggreator@latest
+go install github.com/kryptonn36/Blog_aggreator@latest
 
 
 Ensure $GOPATH/bin is in your PATH:
