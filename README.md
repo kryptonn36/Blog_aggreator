@@ -1,105 +1,163 @@
 # Blog_aggreator
-📦 Requirements
 
-Before running Gator, make sure you have the following installed:
+Gator is a simple CLI that aggregates RSS feeds into a Postgres database and lets you browse posts from the terminal.
 
-1. Go (1.20+ recommended)
+## Requirements
+
+- Go (1.20+ recommended)
+- PostgreSQL (14+ recommended)
+
+Quick checks:
+
+```bash
 go version
-
-
-Install from: https://go.dev/dl/
-
-2. PostgreSQL (14+ recommended)
 psql --version
+```
 
+Downloads:
 
-Install from: https://www.postgresql.org/download/
+- Go: https://go.dev/dl/
+- PostgreSQL: https://www.postgresql.org/download/
 
 Make sure PostgreSQL is running and you have a database created for the app.
 
-🔧 Installation
+## Installation
 
-Install the gator CLI using go install:
+Install the CLI with `go install`:
 
+```bash
 go install github.com/kryptonn36/Blog_aggreator@latest
+```
 
+Ensure `$GOPATH/bin` is in your `PATH`:
 
-Ensure $GOPATH/bin is in your PATH:
+```bash
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
 
-export PATH=$PATH:$(go env GOPATH)/bin
+Verify:
 
-
-You should now be able to run:
-
+```bash
 gator
+```
 
-⚙️ Configuration
+## Configuration
 
-Gator uses a config file to store database connection details and the current user.
-
-Create config file
+Gator reads config from a local JSON file that includes the database connection and the current user.
 
 Create a file at:
 
+```text
 ~/.gatorconfig.json
+```
 
-Example config
+Example:
+
+```json
 {
   "db_url": "postgres://postgres:postgres@localhost:5432/gator?sslmode=disable",
   "current_user_name": ""
 }
+```
 
+Do not commit this file; add it to your global gitignore to keep credentials private.
 
-<!-- ⚠️ Do not commit this file to GitHub
-Add it to .gitignore to keep credentials private. -->
+## Database Setup
 
-🗄️ Database Setup
-
-Goose (Database Migrations)
-
-Gator uses Goose to manage database migrations.
+Gator uses Goose for database migrations.
 
 Install Goose:
 
+```bash
 go install github.com/pressly/goose/v3/cmd/goose@latest
-
+```
 
 Verify:
 
+```bash
 goose -version
+```
 
-Run migrations using Goose:
+Run migrations:
 
+```bash
 make migrate-up
+```
 
+Rollback migrations:
 
-To rollback migrations:
-
+```bash
 make migrate-down
+```
 
-🚀 Usage
-Register a user
+## Usage
+
+Register a user:
+
+```bash
 gator register <username>
+```
 
-Login
+Login:
+
+```bash
 gator login <username>
+```
 
-Add a feed
+Add a feed:
+
+```bash
 gator addfeed <feed_url>
+```
 
-Follow a feed
+Follow a feed:
+
+```bash
 gator follow <feed_url>
+```
 
-Start the aggregator (scrape feeds at intervals)
+Start the aggregator (fetch feeds on an interval):
+
+```bash
 gator agg 5s
+```
 
+Browse posts:
 
-(Example: fetch feeds every 5 seconds)
-
-Browse posts
+```bash
 gator browse
+```
 
+Limit results:
 
-Or limit results:
-
+```bash
 gator browse 5
+```
+
+## Development
+
+Clone the repo and install dependencies (Go modules are handled automatically):
+
+```bash
+git clone https://github.com/kryptonn36/Blog_aggreator.git
+cd Blog_aggreator
+```
+
+Run the CLI directly from source:
+
+```bash
+go run . <command>
+```
+
+Build a local binary:
+
+```bash
+go build -o gator
+./gator <command>
+```
+
+Run tests:
+
+```bash
+go test ./...
+```
